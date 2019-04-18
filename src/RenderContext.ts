@@ -34,6 +34,14 @@ class RenderContext {
         this.scene.add(gridHelper);
 
         const light = new THREE.PointLight();
+
+        light.castShadow = true;
+
+        light.shadow.bias = 0.0001;
+        light.shadow.radius = 5;
+        light.shadow.mapSize.width = 1024;
+        light.shadow.mapSize.height = 1024;
+
         light.position.set(0, 100, 0);
         this.scene.add(light);
 
@@ -50,8 +58,9 @@ class RenderContext {
     }
 
     loadTerrainMesh(heightMap: string) {
-        this.generateTerrainMesh(heightMap, new THREE.MeshPhongMaterial({ wireframe: true }), terrainMesh => {
+        this.generateTerrainMesh(heightMap, new THREE.MeshNormalMaterial({ flatShading: true }), terrainMesh => {
             if (this.terrainMesh) {
+                this.transformControls.detach();
                 this.scene.remove(this.terrainMesh);
             }
 
@@ -64,9 +73,11 @@ class RenderContext {
         this.createTerrainData(heightMap, (terrainData: Float32Array, width: number, height: number) => {
             const geometry = new THREE.PlaneGeometry(width, height, width - 1, height - 1);
             geometry.vertices.forEach((v: THREE.Vector3, index: number) => {
-                v.setZ(terrainData[index]);
+                v.setZ(v.z + terrainData[index]);
             });
             geometry.verticesNeedUpdate = true;
+            geometry.computeVertexNormals();
+            geometry.computeBoundingSphere();
 
             const mesh = new THREE.Mesh(geometry, material);
             mesh.rotation.set(THREE.Math.degToRad(-90), 0, 0);
@@ -78,6 +89,9 @@ class RenderContext {
     createWebGLRenderer(options: WebGLRendererParameters) {
         const renderer = new THREE.WebGLRenderer(options);
         renderer.setPixelRatio(window.devicePixelRatio);
+
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         return renderer;
     }
