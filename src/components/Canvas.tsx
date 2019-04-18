@@ -24,21 +24,6 @@ const useThreeRenderer = () => {
         renderer.setSize(rendererMount.offsetWidth, rendererMount.offsetHeight);
         ref.current.appendChild(renderer.domElement);
 
-        var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var material = new THREE.MeshNormalMaterial();
-        var cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
-
-        camera.position.z = 5;
-
-        var animate = function() {
-            requestAnimationFrame(animate);
-
-            renderer.render(scene, camera);
-        };
-
-        animate();
-
         return () => {
             window.removeEventListener('resize', onResize);
         };

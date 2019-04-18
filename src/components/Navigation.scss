@@ -2,7 +2,7 @@
     flex-direction: column;
     width: 60px;
     border-right: 1px solid $color-divider;
-    background-color: #000;
+    background-color: $color-panel-background;
 
     .route {
         position: relative;
