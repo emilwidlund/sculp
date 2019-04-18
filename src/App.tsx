@@ -6,7 +6,7 @@ import { Canvas } from './components/Canvas';
 
 import './scss/main.scss';
 
-const App = (props: any) => (
+const App = () => (
     <div id="app">
         <Sidebar />
         <Canvas />
