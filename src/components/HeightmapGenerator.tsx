@@ -3,7 +3,7 @@ import * as React from 'react';
 import RenderContext from '../RenderContext';
 import { MapGenerator } from '../MapGenerator';
 
-const mg = new MapGenerator(100, 100);
+const mg = new MapGenerator(100);
 
 export const HeightmapGenerator = () => {
     const [heightMapSeed, setHeightMapSeed] = React.useState(0);

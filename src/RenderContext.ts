@@ -61,8 +61,8 @@ class RenderContext {
     }
 
     generateTerrainMesh(heightMap: string, material: THREE.Material, cb: (terrainMesh: THREE.Mesh) => void) {
-        this.createTerrainData(heightMap, terrainData => {
-            const geometry = new THREE.PlaneGeometry(100, 100, 99, 99);
+        this.createTerrainData(heightMap, (terrainData: Float32Array, width: number, height: number) => {
+            const geometry = new THREE.PlaneGeometry(width, height, width - 1, height - 1);
             geometry.vertices.forEach((v: THREE.Vector3, index: number) => {
                 v.setZ(terrainData[index]);
             });
@@ -110,14 +110,16 @@ class RenderContext {
         return transformControls;
     }
 
-    createTerrainData(heightMap: string, cb: (terrainData: Float32Array) => void) {
+    createTerrainData(heightMap: string, cb: (terrainData: Float32Array, width: number, height: number) => void) {
         const onImageLoad = () => {
+            const { width, height } = image;
+
             const canvas = document.createElement('canvas');
-            canvas.width = image.width;
-            canvas.height = image.height;
+            canvas.width = width;
+            canvas.height = height;
             var context = canvas.getContext('2d');
 
-            const size = image.width * image.height;
+            const size = width * height;
             const terrainData = new Float32Array(size);
 
             context.drawImage(image, 0, 0);
@@ -126,14 +128,14 @@ class RenderContext {
                 terrainData[i] = 0;
             }
 
-            var imageData = context.getImageData(0, 0, image.width, image.height);
+            var imageData = context.getImageData(0, 0, width, height);
 
             var j = 0;
             for (let i = 0; i < imageData.data.length; i += 4) {
                 terrainData[j++] = imageData.data[i] / 10;
             }
 
-            cb(terrainData);
+            cb(terrainData, width, height);
         };
 
         const image = new Image();

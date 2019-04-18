@@ -11,7 +11,7 @@ export class MapGenerator {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
 
-    constructor(width: number, height: number) {
+    constructor(width: number, height: number = width) {
         this.canvas = document.createElement('canvas');
 
         this.canvas.width = width;
