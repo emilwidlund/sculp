@@ -10,7 +10,7 @@ const useThreeRenderer = () => {
         const rendererMount = ref.current;
 
         RenderContext.initialize(rendererMount.offsetWidth, rendererMount.offsetHeight);
-        const { renderer, scene, camera } = RenderContext;
+        const { renderer, camera } = RenderContext;
 
         const onResize = () => {
             camera.aspect = rendererMount.offsetWidth / rendererMount.offsetHeight;

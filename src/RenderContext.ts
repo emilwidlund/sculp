@@ -9,6 +9,7 @@ class RenderContext {
     camera: THREE.PerspectiveCamera;
     orbitControls: any;
     transformControls: any;
+    raycaster: THREE.Raycaster;
 
     terrainMesh: THREE.Mesh;
 
@@ -56,7 +57,6 @@ class RenderContext {
 
             this.terrainMesh = terrainMesh;
             this.scene.add(this.terrainMesh);
-            this.transformControls.attach(this.terrainMesh);
         });
     }
 
@@ -87,7 +87,7 @@ class RenderContext {
     }
 
     createCamera(width: number, height: number, fov: number = 35) {
-        return new THREE.PerspectiveCamera(fov, width / height, 0.1, 1000);
+        return new THREE.PerspectiveCamera(fov, width / height, 0.1, 10000);
     }
 
     createOrbitControls(camera: PerspectiveCamera, domElement: HTMLCanvasElement) {
@@ -105,7 +105,6 @@ class RenderContext {
         });
 
         transformControls.setSpace('local');
-        transformControls.setMode('rotate');
 
         return transformControls;
     }

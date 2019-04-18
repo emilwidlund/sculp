@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Navigation } from './components/Navigation';
+import RenderContext from './RenderContext';
+
+import { Toolbar } from './components/Toolbar';
 import { Sidebar } from './components/Sidebar';
 import { Canvas } from './components/Canvas';
 
@@ -9,7 +11,37 @@ import './scss/main.scss';
 
 const App = () => (
     <div id="app">
-        <Navigation routes={[{ path: '/', icon: 'bubble_chart' }]} />
+        <Toolbar
+            tools={[
+                {
+                    icon: 'navigation',
+                    onClick: () => {
+                        RenderContext.transformControls.detach();
+                    }
+                },
+                {
+                    icon: 'swap_vert',
+                    onClick: () => {
+                        RenderContext.transformControls.attach(RenderContext.terrainMesh);
+                        RenderContext.transformControls.setMode('translate');
+                    }
+                },
+                {
+                    icon: '3d_rotation',
+                    onClick: () => {
+                        RenderContext.transformControls.attach(RenderContext.terrainMesh);
+                        RenderContext.transformControls.setMode('rotate');
+                    }
+                },
+                {
+                    icon: 'fullscreen',
+                    onClick: () => {
+                        RenderContext.transformControls.attach(RenderContext.terrainMesh);
+                        RenderContext.transformControls.setMode('scale');
+                    }
+                }
+            ]}
+        />
         <Canvas />
         <Sidebar />
     </div>

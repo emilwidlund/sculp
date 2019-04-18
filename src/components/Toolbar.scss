@@ -1,0 +1,28 @@
+$tool-size: 50px;
+
+.toolbar {
+    flex-direction: column;
+    width: $tool-size;
+    border-right: 1px solid $color-divider;
+    background-color: $color-panel-background;
+
+    .tool {
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        height: $tool-size;
+        color: #fff;
+
+        &:hover {
+            background-color: $color-hover;
+        }
+
+        &.active {
+            background-color: $color-accent;
+        }
+
+        .icon {
+            font-size: 18px;
+        }
+    }
+}
