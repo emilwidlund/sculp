@@ -10,6 +10,8 @@ class RenderContext {
     orbitControls: any;
     transformControls: any;
 
+    terrainMesh: THREE.Mesh;
+
     initialized: boolean = false;
 
     initialize(width: number, height: number) {
@@ -44,6 +46,33 @@ class RenderContext {
         requestAnimationFrame(this.tick.bind(this));
 
         this.renderer.render(this.scene, this.camera);
+    }
+
+    loadTerrainMesh(heightMap: string) {
+        this.generateTerrainMesh(heightMap, new THREE.MeshPhongMaterial({ wireframe: true }), terrainMesh => {
+            if (this.terrainMesh) {
+                this.scene.remove(this.terrainMesh);
+            }
+
+            this.terrainMesh = terrainMesh;
+            this.scene.add(this.terrainMesh);
+            this.transformControls.attach(this.terrainMesh);
+        });
+    }
+
+    generateTerrainMesh(heightMap: string, material: THREE.Material, cb: (terrainMesh: THREE.Mesh) => void) {
+        this.createTerrainData(heightMap, terrainData => {
+            const geometry = new THREE.PlaneGeometry(100, 100, 99, 99);
+            geometry.vertices.forEach((v: THREE.Vector3, index: number) => {
+                v.setZ(terrainData[index]);
+            });
+            geometry.verticesNeedUpdate = true;
+
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.rotation.set(THREE.Math.degToRad(-90), 0, 0);
+
+            cb(mesh);
+        });
     }
 
     createWebGLRenderer(options: WebGLRendererParameters) {
@@ -81,7 +110,7 @@ class RenderContext {
         return transformControls;
     }
 
-    createTerrainFromHeightMap(heightMap: string) {
+    createTerrainData(heightMap: string, cb: (terrainData: Float32Array) => void) {
         const onImageLoad = () => {
             const canvas = document.createElement('canvas');
             canvas.width = image.width;
@@ -89,33 +118,22 @@ class RenderContext {
             var context = canvas.getContext('2d');
 
             const size = image.width * image.height;
-            const data = new Float32Array(size);
+            const terrainData = new Float32Array(size);
 
             context.drawImage(image, 0, 0);
 
             for (var i = 0; i < size; i++) {
-                data[i] = 0;
+                terrainData[i] = 0;
             }
 
-            var imgd = context.getImageData(0, 0, image.width, image.height);
-            var pix = imgd.data;
+            var imageData = context.getImageData(0, 0, image.width, image.height);
 
             var j = 0;
-            for (let i = 0; i < pix.length; i += 4) {
-                data[j++] = pix[i] / 10;
+            for (let i = 0; i < imageData.data.length; i += 4) {
+                terrainData[j++] = imageData.data[i] / 10;
             }
 
-            const geometry = new THREE.PlaneGeometry(100, 100, 99, 99);
-            geometry.vertices.forEach((v: THREE.Vector3, index: number) => {
-                v.setZ(data[index]);
-            });
-            geometry.verticesNeedUpdate = true;
-            const material = new THREE.MeshPhongMaterial({ wireframe: true });
-            const mesh = new THREE.Mesh(geometry, material);
-            mesh.rotation.set(THREE.Math.degToRad(-90), 0, 0);
-
-            this.scene.add(mesh);
-            this.transformControls.attach(mesh);
+            cb(terrainData);
         };
 
         const image = new Image();

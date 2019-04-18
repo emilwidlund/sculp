@@ -16,7 +16,7 @@ export const HeightmapGenerator = () => {
                     const heightMap = mg.generateHeightMap(4);
 
                     setHeightMap(heightMap);
-                    RenderContext.createTerrainFromHeightMap(heightMap);
+                    RenderContext.loadTerrainMesh(heightMap);
                 }}
             >
                 Generate Map
