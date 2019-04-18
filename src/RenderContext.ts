@@ -109,7 +109,7 @@ class RenderContext {
     createOrbitControls(camera: PerspectiveCamera, domElement: HTMLCanvasElement) {
         const orbitControls = new OrbitControls(camera, domElement);
         orbitControls.enableDamping = true;
-        orbitControls.dampingFactor = 1.4;
+        orbitControls.dampingFactor = 0.3;
 
         return orbitControls;
     }
