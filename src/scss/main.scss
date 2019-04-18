@@ -1,0 +1,31 @@
+@import 'variables';
+@import 'fonts';
+
+body {
+    display: flex;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: $color-text;
+
+    #react-mount,
+    #app {
+        flex-grow: 1;
+        width: 100%;
+    }
+
+    #app {
+        background-color: #000;
+    }
+}
+
+// GENERAL -------------
+
+div {
+    display: flex;
+    box-sizing: border-box;
+}
+
+// COMPONENTS ----------
+
+@import '../components/Canvas';
+@import '../components/Sidebar';

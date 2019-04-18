@@ -1,0 +1,20 @@
+.sidebar {
+    width: 300px;
+    border-right: 1px solid $color-divider;
+    background-color: $color-panel-background;
+
+    .navigation {
+        flex-direction: column;
+        width: 60px;
+        border-right: 1px solid $color-divider;
+        background-color: #000;
+
+        .route {
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            background-color: $color-accent;
+            color: #fff;
+        }
+    }
+}
