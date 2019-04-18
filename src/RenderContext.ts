@@ -31,27 +31,17 @@ class RenderContext {
         this.scene.add(gridHelper);
 
         const light = new THREE.PointLight();
-        light.position.set(0, 20, 0);
+        light.position.set(0, 100, 0);
         this.scene.add(light);
 
-        const geometry = new THREE.BoxGeometry(10, 0.2, 10);
-        const material = new THREE.MeshPhongMaterial();
-        const cube = new THREE.Mesh(geometry, material);
+        this.camera.position.set(100, 100, 100);
+        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-        this.scene.add(cube);
-
-        this.transformControls.attach(cube);
-
-        this.camera.position.set(20, 10, 20);
-        this.camera.lookAt(cube.position);
-
-        this.tick(cube);
+        this.tick();
     }
 
-    tick(cube: THREE.Mesh) {
-        requestAnimationFrame(() => this.tick(cube));
-
-        // cube.rotation.y += 0.01;
+    tick() {
+        requestAnimationFrame(this.tick.bind(this));
 
         this.renderer.render(this.scene, this.camera);
     }
@@ -89,6 +79,48 @@ class RenderContext {
         transformControls.setMode('rotate');
 
         return transformControls;
+    }
+
+    createTerrainFromHeightMap(heightMap: string) {
+        const onImageLoad = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            var context = canvas.getContext('2d');
+
+            const size = image.width * image.height;
+            const data = new Float32Array(size);
+
+            context.drawImage(image, 0, 0);
+
+            for (var i = 0; i < size; i++) {
+                data[i] = 0;
+            }
+
+            var imgd = context.getImageData(0, 0, image.width, image.height);
+            var pix = imgd.data;
+
+            var j = 0;
+            for (let i = 0; i < pix.length; i += 4) {
+                data[j++] = pix[i] / 10;
+            }
+
+            const geometry = new THREE.PlaneGeometry(100, 100, 99, 99);
+            geometry.vertices.forEach((v: THREE.Vector3, index: number) => {
+                v.setZ(data[index]);
+            });
+            geometry.verticesNeedUpdate = true;
+            const material = new THREE.MeshPhongMaterial({ wireframe: true });
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.rotation.set(THREE.Math.degToRad(-90), 0, 0);
+
+            this.scene.add(mesh);
+            this.transformControls.attach(mesh);
+        };
+
+        const image = new Image();
+        image.onload = onImageLoad;
+        image.src = heightMap;
     }
 }
 

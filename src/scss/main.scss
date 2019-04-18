@@ -25,6 +25,10 @@ div {
     box-sizing: border-box;
 }
 
+button {
+    outline: none;
+}
+
 // COMPONENTS ----------
 @import '../components/Icon';
 @import '../components/Canvas';
