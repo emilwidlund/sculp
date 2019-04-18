@@ -12,12 +12,14 @@
     "dependencies": {
         "lodash": "^4.17.11",
         "mobx": "^5.9.4",
+        "noisejs": "^2.1.0",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "three": "^0.103.0",
         "three-orbitcontrols": "^2.102.1"
     },
     "devDependencies": {
+        "@types/noisejs": "^0.0.28",
         "@types/react": "^16.8.13",
         "@types/react-dom": "^16.8.4",
         "awesome-typescript-loader": "^5.2.1",

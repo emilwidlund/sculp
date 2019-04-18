@@ -1,10 +1,8 @@
 import * as React from 'react';
 
-import { Route } from '../types';
+import { HeightmapGenerator } from './HeightmapGenerator';
 
-interface SidebarProps {
-    routes: Route[];
-}
+interface SidebarProps {}
 
 export const Sidebar = (props: SidebarProps) => {
     return (
@@ -13,7 +11,9 @@ export const Sidebar = (props: SidebarProps) => {
                 <div className="header">
                     <span className="title">Visual Properties</span>
                 </div>
-                <div className="section-content" />
+                <div className="section-content">
+                    <HeightmapGenerator />
+                </div>
             </div>
         </div>
     );

@@ -30,15 +30,19 @@ class RenderContext {
         const gridHelper = new THREE.GridHelper(100, 100, 0x333333, 0x333333);
         this.scene.add(gridHelper);
 
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshNormalMaterial();
+        const light = new THREE.PointLight();
+        light.position.set(0, 20, 0);
+        this.scene.add(light);
+
+        const geometry = new THREE.BoxGeometry(10, 0.2, 10);
+        const material = new THREE.MeshPhongMaterial();
         const cube = new THREE.Mesh(geometry, material);
 
         this.scene.add(cube);
 
         this.transformControls.attach(cube);
 
-        this.camera.position.set(10, 5, 10);
+        this.camera.position.set(20, 10, 20);
         this.camera.lookAt(cube.position);
 
         this.tick(cube);
@@ -47,7 +51,7 @@ class RenderContext {
     tick(cube: THREE.Mesh) {
         requestAnimationFrame(() => this.tick(cube));
 
-        cube.rotation.y += 0.01;
+        // cube.rotation.y += 0.01;
 
         this.renderer.render(this.scene, this.camera);
     }

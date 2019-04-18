@@ -9,9 +9,9 @@ import './scss/main.scss';
 
 const App = () => (
     <div id="app">
-        <Navigation routes={[{ path: '/', icon: 'face' }]} />
+        <Navigation routes={[{ path: '/', icon: 'bubble_chart' }]} />
         <Canvas />
-        <Sidebar routes={[{ path: '/', icon: 'face' }]} />
+        <Sidebar />
     </div>
 );
 

@@ -1,7 +1,11 @@
 import * as React from 'react';
 
 import { Icon } from './Icon';
-import { Route } from '../types';
+
+interface Route {
+    path: string;
+    icon: string;
+}
 
 interface NavigationProps {
     routes: Route[];
