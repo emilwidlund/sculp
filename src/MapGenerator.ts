@@ -10,7 +10,6 @@ const modulate = (value: number, rangeA: number[], rangeB: number[]) => {
 export class MapGenerator {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
-    noise: Noise = new (Noise as any).Noise(Math.random());
 
     constructor(width: number, height: number) {
         this.canvas = document.createElement('canvas');
@@ -21,13 +20,15 @@ export class MapGenerator {
         this.context = this.canvas.getContext('2d');
     }
 
-    generateHeightMap(scale: number = 1) {
+    generateHeightMap(scale: number = 1, seed?: number) {
         const { width, height } = this.canvas;
         const imageData = this.context.createImageData(width, height);
 
+        const noise = new (Noise as any).Noise(seed);
+
         for (var x = 0; x < width; x++) {
             for (var y = 0; y < height; y++) {
-                let perlinValue = this.noise.perlin2((x / 100) * scale, (y / 100) * scale);
+                let perlinValue = noise.perlin2((x / 100) * scale, (y / 100) * scale);
                 perlinValue = modulate(perlinValue, [-1, 1], [0, 1]) * 255;
 
                 const cell = (x + y * width) * 4;
