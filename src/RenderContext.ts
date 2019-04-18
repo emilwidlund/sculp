@@ -30,7 +30,7 @@ class RenderContext {
     setupScene() {
         this.scene.add(this.transformControls);
 
-        const gridHelper = new THREE.GridHelper(100, 100, 0x333333, 0x333333);
+        const gridHelper = new THREE.GridHelper(500, 100, 0x333333, 0x333333);
         this.scene.add(gridHelper);
 
         const light = new THREE.PointLight();
@@ -53,6 +53,8 @@ class RenderContext {
 
     tick() {
         requestAnimationFrame(this.tick.bind(this));
+
+        this.orbitControls.update();
 
         this.renderer.render(this.scene, this.camera);
     }
@@ -106,7 +108,8 @@ class RenderContext {
 
     createOrbitControls(camera: PerspectiveCamera, domElement: HTMLCanvasElement) {
         const orbitControls = new OrbitControls(camera, domElement);
-        orbitControls.update();
+        orbitControls.enableDamping = true;
+        orbitControls.dampingFactor = 1.4;
 
         return orbitControls;
     }
