@@ -27,6 +27,9 @@ class RenderContext {
     setupScene() {
         this.scene.add(this.transformControls);
 
+        const gridHelper = new THREE.GridHelper(100, 100, 0x333333, 0x333333);
+        this.scene.add(gridHelper);
+
         const geometry = new THREE.BoxGeometry(1, 1, 1);
         const material = new THREE.MeshNormalMaterial();
         const cube = new THREE.Mesh(geometry, material);
@@ -35,7 +38,7 @@ class RenderContext {
 
         this.transformControls.attach(cube);
 
-        this.camera.position.set(5, 5, 5);
+        this.camera.position.set(10, 5, 10);
         this.camera.lookAt(cube.position);
 
         this.tick(cube);
