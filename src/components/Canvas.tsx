@@ -12,6 +12,15 @@ const useThreeRenderer = () => {
         RenderContext.initialize(rendererMount.offsetWidth, rendererMount.offsetHeight);
         const { renderer, scene, camera } = RenderContext;
 
+        const onResize = () => {
+            camera.aspect = rendererMount.offsetWidth / rendererMount.offsetHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(rendererMount.offsetWidth, rendererMount.offsetHeight);
+        };
+
+        window.addEventListener('resize', onResize);
+
         renderer.setSize(rendererMount.offsetWidth, rendererMount.offsetHeight);
         ref.current.appendChild(renderer.domElement);
 
@@ -29,6 +38,10 @@ const useThreeRenderer = () => {
         };
 
         animate();
+
+        return () => {
+            window.removeEventListener('resize', onResize);
+        };
     }, []);
 
     return ref;

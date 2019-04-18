@@ -15,3 +15,17 @@
     font-weight: 600;
     src: url('/fonts/Inter-Bold.otf') format('otf');
 }
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 400;
+    color: #fff;
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-weight: 400;
+    src: url('/fonts/MaterialIcons-Regular.woff2') format('woff2');
+}

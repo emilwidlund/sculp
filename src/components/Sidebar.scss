@@ -1,20 +1,23 @@
 .sidebar {
-    width: 300px;
-    border-right: 1px solid $color-divider;
+    min-width: 300px;
+    border-left: 1px solid $color-divider;
     background-color: $color-panel-background;
 
-    .navigation {
+    .section {
         flex-direction: column;
-        width: 60px;
-        border-right: 1px solid $color-divider;
-        background-color: #000;
 
-        .route {
-            justify-content: center;
-            align-items: center;
-            height: 60px;
-            background-color: $color-accent;
-            color: #fff;
+        .header {
+            padding: 10px 24px;
+            background-color: #000;
+
+            .title {
+                color: #fff;
+                font-size: 12px;
+            }
+        }
+
+        .section-content {
+            padding: 24px;
         }
     }
 }

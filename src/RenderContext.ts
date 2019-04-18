@@ -27,7 +27,7 @@ class RenderContext {
         return new THREE.Scene();
     }
 
-    createCamera(width: number, height: number, fov: number = 75) {
+    createCamera(width: number, height: number, fov: number = 35) {
         return new THREE.PerspectiveCamera(fov, width / height, 0.1, 1000);
     }
 
