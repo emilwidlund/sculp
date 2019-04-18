@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import RenderContext from '../RenderContext';
 
-import { HeightmapGenerator } from './HeightmapGenerator';
-import { ImageInput } from './ImageInput';
+import { HeightmapGenerator } from './controls/HeightmapGenerator';
+import { ImageInput } from './controls/ImageInput';
 
 interface SidebarProps {}
 

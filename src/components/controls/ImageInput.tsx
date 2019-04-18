@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { Control } from './Control';
+
 interface ImageInputProps {
     onImageLoaded(data: string): void;
 }
@@ -22,9 +24,10 @@ export const ImageInput = ({ onImageLoaded }: ImageInputProps) => {
     };
 
     return (
-        <div>
-            <img src={image} width={100} height={100} />
-            <input type="file" accept="image/*" onChange={readFile} />
-        </div>
+        <Control title="Height Map">
+            <div className="image" style={{ backgroundImage: `url(${image})` }} />
+            <button onClick={() => document.getElementById('control-image-input').click()}>Select</button>
+            <input id="control-image-input" type="file" accept="image/*" onChange={readFile} hidden />
+        </Control>
     );
 };

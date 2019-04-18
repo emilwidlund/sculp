@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { MapGenerator } from '../MapGenerator';
+import { Control } from './Control';
+import { MapGenerator } from '../../MapGenerator';
 
 interface HeightmapGeneratorProps {
     onHeightmapLoaded(data: string): void;
@@ -13,8 +14,8 @@ export const HeightmapGenerator = ({ onHeightmapLoaded }: HeightmapGeneratorProp
     const [heightMap, setHeightMap] = React.useState(null);
 
     return (
-        <div>
-            <img src={heightMap} width={100} height={100} />
+        <Control title="Perlin Map">
+            <div className="image" style={{ backgroundImage: `url(${heightMap})` }} />
             <button
                 onClick={() => {
                     const heightMap = mg.generateHeightMap(4, heightMapSeed);
@@ -25,8 +26,8 @@ export const HeightmapGenerator = ({ onHeightmapLoaded }: HeightmapGeneratorProp
                     onHeightmapLoaded(heightMap);
                 }}
             >
-                Generate Map
+                Generate
             </button>
-        </div>
+        </Control>
     );
 };

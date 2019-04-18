@@ -1,0 +1,37 @@
+.control {
+    align-items: center;
+    padding: 12px 0;
+
+    &:first-child {
+        padding-top: 0;
+    }
+
+    .title {
+        min-width: 90px;
+
+        span {
+            font-size: 12px;
+            color: #fff;
+        }
+    }
+
+    .content {
+        align-items: center;
+
+        .image {
+            flex-grow: 0;
+            min-width: 40px;
+            width: 50px;
+            height: 30px;
+            border-radius: 6px;
+            background-color: #000;
+            background-position: center center;
+            background-size: cover;
+            border: 1px solid $color-divider;
+        }
+
+        button {
+            margin-left: 12px;
+        }
+    }
+}

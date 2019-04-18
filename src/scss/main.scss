@@ -26,7 +26,21 @@ div {
 }
 
 button {
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 4px 8px;
+    max-height: 22px;
+    border-radius: 4px;
+    background-color: $color-accent;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #fff;
     outline: none;
+    border: 0;
+
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
 // COMPONENTS ----------
@@ -34,3 +48,4 @@ button {
 @import '../components/Canvas';
 @import '../components/Toolbar';
 @import '../components/Sidebar';
+@import '../components/controls/Control';

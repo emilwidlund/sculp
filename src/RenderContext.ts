@@ -58,7 +58,7 @@ class RenderContext {
     }
 
     loadTerrainMesh(heightMap: string) {
-        this.generateTerrainMesh(heightMap, new THREE.MeshNormalMaterial({ flatShading: true }), terrainMesh => {
+        this.generateTerrainMesh(heightMap, new THREE.MeshNormalMaterial({ wireframe: true }), terrainMesh => {
             if (this.terrainMesh) {
                 this.transformControls.detach();
                 this.scene.remove(this.terrainMesh);

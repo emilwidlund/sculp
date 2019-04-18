@@ -1,6 +1,7 @@
 .sidebar {
     flex-direction: column;
-    min-width: 300px;
+    min-width: 280px;
+    max-width: 280px;
     border-left: 1px solid $color-divider;
     background-color: $color-panel-background;
 
@@ -18,7 +19,8 @@
         }
 
         .section-content {
-            padding: 24px;
+            flex-direction: column;
+            padding: 12px;
         }
     }
 }
