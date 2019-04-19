@@ -91,7 +91,7 @@ class RenderContext {
 
     generateTerrainMesh(heightMap: string, material: THREE.Material, cb: (terrainMesh: THREE.Mesh) => void) {
         this.createTerrainData(heightMap, (terrainData: Float32Array, width: number, height: number) => {
-            const geometry = new THREE.PlaneGeometry(width / 10, height / 10, width - 1, height - 1);
+            const geometry = new THREE.PlaneGeometry(width, height, width - 1, height - 1);
 
             for (let i = 0; i < geometry.vertices.length; i++) {
                 geometry.vertices[i].setZ(geometry.vertices[i].z + terrainData[i]);
