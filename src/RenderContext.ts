@@ -34,16 +34,16 @@ class RenderContext {
         this.scene.add(gridHelper);
 
         const light = new THREE.PointLight();
+        light.position.set(0, 300, 0);
 
         light.castShadow = true;
-
         light.shadow.bias = 0.0001;
         light.shadow.radius = 5;
         light.shadow.mapSize.width = 1024;
         light.shadow.mapSize.height = 1024;
 
-        light.position.set(0, 100, 0);
         this.scene.add(light);
+        this.transformControls.attach(light);
 
         this.camera.position.set(100, 100, 100);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
@@ -60,9 +60,23 @@ class RenderContext {
     }
 
     loadTerrainMesh(heightMap: string) {
+        var loader = new THREE.TextureLoader();
+
+        const map = loader.load('/textures/aus_texture.png');
+        // const envMap = loader.load('/textures/davos_envmap.jpg');
+
+        map.anisotropy = this.renderer.getMaxAnisotropy();
+
+        // in this example we create the material when the texture is loaded
+        var material = new THREE.MeshPhongMaterial({
+            map,
+            shininess: 20
+        });
+
         this.generateTerrainMesh(
             heightMap,
-            new THREE.MeshNormalMaterial({ wireframe: true }),
+            // new THREE.MeshNormalMaterial({ wireframe: true }),
+            material,
             (terrainMesh: THREE.Mesh) => {
                 if (this.terrainMesh) {
                     this.transformControls.detach();
@@ -77,11 +91,13 @@ class RenderContext {
 
     generateTerrainMesh(heightMap: string, material: THREE.Material, cb: (terrainMesh: THREE.Mesh) => void) {
         this.createTerrainData(heightMap, (terrainData: Float32Array, width: number, height: number) => {
-            const geometry = new THREE.PlaneGeometry(width, height, width - 1, height - 1);
-            geometry.vertices.forEach((v: THREE.Vector3, index: number) => {
-                v.setZ(v.z + terrainData[index]);
-            });
+            const geometry = new THREE.PlaneGeometry(width / 10, height / 10, width - 1, height - 1);
+
+            for (let i = 0; i < geometry.vertices.length; i++) {
+                geometry.vertices[i].setZ(geometry.vertices[i].z + terrainData[i]);
+            }
             geometry.verticesNeedUpdate = true;
+
             geometry.computeVertexNormals();
             geometry.computeBoundingSphere();
 
