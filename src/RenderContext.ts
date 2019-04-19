@@ -60,15 +60,19 @@ class RenderContext {
     }
 
     loadTerrainMesh(heightMap: string) {
-        this.generateTerrainMesh(heightMap, new THREE.MeshNormalMaterial({ wireframe: true }), terrainMesh => {
-            if (this.terrainMesh) {
-                this.transformControls.detach();
-                this.scene.remove(this.terrainMesh);
-            }
+        this.generateTerrainMesh(
+            heightMap,
+            new THREE.MeshNormalMaterial({ wireframe: true }),
+            (terrainMesh: THREE.Mesh) => {
+                if (this.terrainMesh) {
+                    this.transformControls.detach();
+                    this.scene.remove(this.terrainMesh);
+                }
 
-            this.terrainMesh = terrainMesh;
-            this.scene.add(this.terrainMesh);
-        });
+                this.terrainMesh = terrainMesh;
+                this.scene.add(this.terrainMesh);
+            }
+        );
     }
 
     generateTerrainMesh(heightMap: string, material: THREE.Material, cb: (terrainMesh: THREE.Mesh) => void) {
