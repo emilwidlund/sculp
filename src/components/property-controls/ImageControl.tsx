@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { Control } from './Control';
+import { PropertyControl } from './PropertyControl';
 
-interface ImageInputProps {
+interface ImageControlProps {
     onImageLoaded(data: string): void;
 }
 
-export const ImageInput = ({ onImageLoaded }: ImageInputProps) => {
+export const ImageControl = ({ onImageLoaded }: ImageControlProps) => {
     const [image, setImage] = React.useState(null);
 
     const readFile = ({ nativeEvent: { target } }: any) => {
@@ -24,10 +24,10 @@ export const ImageInput = ({ onImageLoaded }: ImageInputProps) => {
     };
 
     return (
-        <Control title="Height Map">
+        <PropertyControl title="Height Map">
             <div className="image" style={{ backgroundImage: `url(${image})` }} />
             <button onClick={() => document.getElementById('control-image-input').click()}>Select</button>
             <input id="control-image-input" type="file" accept="image/*" onChange={readFile} hidden />
-        </Control>
+        </PropertyControl>
     );
 };
