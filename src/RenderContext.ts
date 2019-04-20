@@ -1,6 +1,8 @@
 import * as OrbitControls from 'three-orbitcontrols';
 import { WebGLRendererParameters, PerspectiveCamera } from 'three';
 
+import { modulate } from './utils/helpers';
+
 const THREE = (window as any).THREE;
 
 class RenderContext {
@@ -43,7 +45,6 @@ class RenderContext {
         light.shadow.mapSize.height = 1024;
 
         this.scene.add(light);
-        this.transformControls.attach(light);
 
         this.camera.position.set(100, 100, 100);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
@@ -60,23 +61,9 @@ class RenderContext {
     }
 
     loadTerrainMesh(heightMap: string) {
-        var loader = new THREE.TextureLoader();
-
-        const map = loader.load('/textures/aus_texture.png');
-        // const envMap = loader.load('/textures/davos_envmap.jpg');
-
-        map.anisotropy = this.renderer.getMaxAnisotropy();
-
-        // in this example we create the material when the texture is loaded
-        var material = new THREE.MeshPhongMaterial({
-            map,
-            shininess: 20
-        });
-
         this.generateTerrainMesh(
             heightMap,
-            // new THREE.MeshNormalMaterial({ wireframe: true }),
-            material,
+            new THREE.MeshNormalMaterial({ wireframe: true }),
             (terrainMesh: THREE.Mesh) => {
                 if (this.terrainMesh) {
                     this.transformControls.detach();
@@ -90,7 +77,7 @@ class RenderContext {
     }
 
     generateTerrainMesh(heightMap: string, material: THREE.Material, cb: (terrainMesh: THREE.Mesh) => void) {
-        this.createTerrainData(heightMap, (terrainData: Float32Array, width: number, height: number) => {
+        this.createTerrainData(heightMap, undefined, (terrainData: Float32Array, width: number, height: number) => {
             const geometry = new THREE.PlaneGeometry(width, height, width - 1, height - 1);
 
             for (let i = 0; i < geometry.vertices.length; i++) {
@@ -146,7 +133,11 @@ class RenderContext {
         return transformControls;
     }
 
-    createTerrainData(heightMap: string, cb: (terrainData: Float32Array, width: number, height: number) => void) {
+    createTerrainData(
+        heightMap: string,
+        maxElevation: number = 100,
+        cb: (terrainData: Float32Array, width: number, height: number) => void
+    ) {
         const onImageLoad = () => {
             const { width, height } = image;
 
@@ -168,7 +159,7 @@ class RenderContext {
 
             var j = 0;
             for (let i = 0; i < imageData.data.length; i += 4) {
-                terrainData[j++] = imageData.data[i] / 10;
+                terrainData[j++] = modulate(imageData.data[i], [0, 255], [0, maxElevation]);
             }
 
             cb(terrainData, width, height);
