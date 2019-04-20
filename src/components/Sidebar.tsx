@@ -32,7 +32,7 @@ export const Sidebar = (props: SidebarProps) => {
         <div className="sidebar">
             <div className="section">
                 <div className="header">
-                    <span className="title">Visual Properties</span>
+                    <span className="title">Height Map</span>
                 </div>
                 <div
                     style={{
@@ -116,7 +116,14 @@ export const Sidebar = (props: SidebarProps) => {
                     >
                         Generate Terrain
                     </button>
+                </div>
+            </div>
 
+            <div className="section">
+                <div className="header">
+                    <span className="title">Custom Height Map</span>
+                </div>
+                <div className="section-content">
                     <ImageControl
                         onImageLoaded={image => {
                             RenderContext.loadTerrainMesh(image);
