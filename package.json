@@ -20,6 +20,7 @@
         "three-orbitcontrols": "^2.102.1"
     },
     "devDependencies": {
+        "@types/lodash": "^4.14.123",
         "@types/noisejs": "^0.0.28",
         "@types/react": "^16.8.13",
         "@types/react-dom": "^16.8.4",

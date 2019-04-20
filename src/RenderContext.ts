@@ -115,8 +115,8 @@ class RenderContext {
 
     createOrbitControls(camera: PerspectiveCamera, domElement: HTMLCanvasElement) {
         const orbitControls = new OrbitControls(camera, domElement);
-        orbitControls.autoRotate = true;
-        orbitControls.autoRotateSpeed = 0.2;
+        // orbitControls.autoRotate = true;
+        // orbitControls.autoRotateSpeed = 0.2;
         orbitControls.enableDamping = true;
         orbitControls.dampingFactor = 0.3;
 

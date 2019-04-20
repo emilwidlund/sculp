@@ -8,10 +8,11 @@ interface NumberControlProps {
     defaultValue: number;
     min: number;
     max: number;
+    step: number;
     onChange?(value: number): void;
 }
 
-export const NumberControl = ({ title, defaultValue, min, max, onChange }: NumberControlProps) => {
+export const NumberControl = ({ title, defaultValue, min, max, step, onChange }: NumberControlProps) => {
     const [value, setValue] = React.useState(defaultValue.toString());
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,8 +37,8 @@ export const NumberControl = ({ title, defaultValue, min, max, onChange }: Numbe
 
     return (
         <PropertyControl title={title}>
-            <input value={value.toString()} onBlur={handleBlur} onKeyPress={handleKeyPress} onChange={handleChange} />
-            <Slider min={min} max={max} onChange={handleSliderChange} />
+            <input value={value} onBlur={handleBlur} onKeyPress={handleKeyPress} onChange={handleChange} />
+            <Slider value={parseFloat(value)} min={min} max={max} step={step} onChange={handleSliderChange} />
         </PropertyControl>
     );
 };
