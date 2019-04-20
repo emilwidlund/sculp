@@ -1,14 +1,17 @@
 import * as React from 'react';
 
-import { PropertyControl } from './PropertyControl';
+import { PropertyControl } from '../PropertyControl';
+import { Slider } from '../Slider';
 
 interface NumberControlProps {
     title: string;
     defaultValue: number;
+    min: number;
+    max: number;
     onChange?(value: number): void;
 }
 
-export const NumberControl = ({ title, defaultValue, onChange }: NumberControlProps) => {
+export const NumberControl = ({ title, defaultValue, min, max, onChange }: NumberControlProps) => {
     const [value, setValue] = React.useState(defaultValue.toString());
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,9 +29,15 @@ export const NumberControl = ({ title, defaultValue, onChange }: NumberControlPr
         }
     };
 
+    const handleSliderChange = (value: number) => {
+        setValue(value.toString());
+        onChange ? onChange(value) : null;
+    };
+
     return (
         <PropertyControl title={title}>
             <input value={value.toString()} onBlur={handleBlur} onKeyPress={handleKeyPress} onChange={handleChange} />
+            <Slider min={min} max={max} onChange={handleSliderChange} />
         </PropertyControl>
     );
 };

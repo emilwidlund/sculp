@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { PropertyControl } from './PropertyControl';
+import { PropertyControl } from '../PropertyControl';
 
 interface ImageControlProps {
     onImageLoaded(data: string): void;

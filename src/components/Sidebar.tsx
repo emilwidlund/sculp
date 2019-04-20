@@ -33,25 +33,36 @@ export const Sidebar = (props: SidebarProps) => {
                 <div className="header">
                     <span className="title">Visual Properties</span>
                 </div>
+                <div
+                    style={{
+                        height: 280,
+                        backgroundImage: `url(${heightMap})`,
+                        backgroundPosition: 'center center',
+                        backgroundSize: 'cover'
+                    }}
+                />
                 <div className="section-content">
-                    <div
-                        style={{
-                            height: 232,
-                            backgroundImage: `url(${heightMap})`,
-                            backgroundPosition: 'center center',
-                            backgroundSize: 'cover'
-                        }}
+                    <NumberControl title="Width" min={10} max={1000} defaultValue={width} onChange={setWidth} />
+                    <NumberControl title="Height" min={10} max={1000} defaultValue={height} onChange={setHeight} />
+                    <NumberControl title="Seed" min={0} max={9999} defaultValue={seed} onChange={setSeed} />
+                    <NumberControl title="Scale" min={1} max={100} defaultValue={scale} onChange={setScale} />
+                    <NumberControl title="Octaves" min={0} max={10} defaultValue={octaves} onChange={setOctaves} />
+                    <NumberControl
+                        title="Persistance"
+                        min={0}
+                        max={10}
+                        defaultValue={persistance}
+                        onChange={setPersistance}
                     />
-
-                    <NumberControl title="Width" defaultValue={width} onChange={setWidth} />
-                    <NumberControl title="Height" defaultValue={height} onChange={setHeight} />
-                    <NumberControl title="Seed" defaultValue={seed} onChange={setSeed} />
-                    <NumberControl title="Scale" defaultValue={scale} onChange={setScale} />
-                    <NumberControl title="Octaves" defaultValue={octaves} onChange={setOctaves} />
-                    <NumberControl title="Persistance" defaultValue={persistance} onChange={setPersistance} />
-                    <NumberControl title="Lacunarity" defaultValue={lacunarity} onChange={setLacunarity} />
-                    <NumberControl title="Offset X" defaultValue={offsetX} onChange={setOffsetX} />
-                    <NumberControl title="Offset Y" defaultValue={offsetY} onChange={setOffsetY} />
+                    <NumberControl
+                        title="Lacunarity"
+                        min={0}
+                        max={10}
+                        defaultValue={lacunarity}
+                        onChange={setLacunarity}
+                    />
+                    <NumberControl title="Offset X" min={0} max={1000} defaultValue={offsetX} onChange={setOffsetX} />
+                    <NumberControl title="Offset Y" min={10} max={1000} defaultValue={offsetY} onChange={setOffsetY} />
 
                     <button
                         onClick={() => {

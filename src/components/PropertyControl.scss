@@ -16,6 +16,7 @@
     }
 
     .content {
+        flex-grow: 1;
         align-items: center;
 
         .image {
@@ -28,6 +29,14 @@
             background-position: center center;
             background-size: cover;
             border: 1px solid $color-divider;
+        }
+
+        input {
+            width: 50px;
+        }
+
+        .slider {
+            margin-left: 24px;
         }
 
         button {
