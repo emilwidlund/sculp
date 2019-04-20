@@ -1,15 +1,18 @@
 import * as React from 'react';
 
 import RenderContext from '../RenderContext';
-import { MapGenerator } from '../MapGenerator';
+import { HeightMap } from '../HeightMapGenerator';
 
 import { NumberControl } from './property-controls/NumberControl';
-import { HeightmapControl } from './property-controls/HeightmapControl';
 import { ImageControl } from './property-controls/ImageControl';
 
 interface SidebarProps {}
 
 export const Sidebar = (props: SidebarProps) => {
+    const [heightMap, setHeightMap] = React.useState(null);
+
+    const [width, setWidth] = React.useState(100);
+    const [height, setHeight] = React.useState(100);
     const [seed, setSeed] = React.useState(0);
     const [scale, setScale] = React.useState(1);
     const [octaves, setOctaves] = React.useState(4);
@@ -19,18 +22,9 @@ export const Sidebar = (props: SidebarProps) => {
     const [offsetY, setOffsetY] = React.useState(0);
 
     React.useEffect(() => {
-        const mapGenerator = new MapGenerator(400);
-        const heightMap = mapGenerator.generateHeightMap(
-            seed,
-            scale,
-            octaves,
-            persistance,
-            lacunarity,
-            offsetX,
-            offsetY
+        setHeightMap(
+            new HeightMap(width, height, seed, scale, octaves, persistance, lacunarity, offsetX, offsetY).base64
         );
-
-        RenderContext.loadTerrainMesh(heightMap);
     });
 
     return (
@@ -40,6 +34,17 @@ export const Sidebar = (props: SidebarProps) => {
                     <span className="title">Visual Properties</span>
                 </div>
                 <div className="section-content">
+                    <div
+                        style={{
+                            height: 232,
+                            backgroundImage: `url(${heightMap})`,
+                            backgroundPosition: 'center center',
+                            backgroundSize: 'cover'
+                        }}
+                    />
+
+                    <NumberControl title="Width" defaultValue={width} onChange={setWidth} />
+                    <NumberControl title="Height" defaultValue={height} onChange={setHeight} />
                     <NumberControl title="Seed" defaultValue={seed} onChange={setSeed} />
                     <NumberControl title="Scale" defaultValue={scale} onChange={setScale} />
                     <NumberControl title="Octaves" defaultValue={octaves} onChange={setOctaves} />
@@ -48,11 +53,14 @@ export const Sidebar = (props: SidebarProps) => {
                     <NumberControl title="Offset X" defaultValue={offsetX} onChange={setOffsetX} />
                     <NumberControl title="Offset Y" defaultValue={offsetY} onChange={setOffsetY} />
 
-                    <HeightmapControl
-                        onHeightmapLoaded={heightMap => {
+                    <button
+                        onClick={() => {
                             RenderContext.loadTerrainMesh(heightMap);
                         }}
-                    />
+                    >
+                        Generate Terrain
+                    </button>
+
                     <ImageControl
                         onImageLoaded={image => {
                             RenderContext.loadTerrainMesh(image);

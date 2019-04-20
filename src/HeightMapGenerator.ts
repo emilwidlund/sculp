@@ -2,20 +2,15 @@ import Noise from 'noisejs';
 
 import { modulate } from './utils/helpers';
 
-export class MapGenerator {
+export class HeightMap {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
 
-    constructor(width: number, height: number = width) {
-        this.canvas = document.createElement('canvas');
+    base64: string;
 
-        this.canvas.width = width;
-        this.canvas.height = height;
-
-        this.context = this.canvas.getContext('2d');
-    }
-
-    generateHeightMap(
+    constructor(
+        width: number,
+        height: number = width,
         seed: number = 0,
         scale: number = 1,
         octaves: number = 4,
@@ -24,7 +19,13 @@ export class MapGenerator {
         offsetX: number = 0,
         offsetY: number = 0
     ) {
-        const { width, height } = this.canvas;
+        this.canvas = document.createElement('canvas');
+
+        this.canvas.width = width;
+        this.canvas.height = height;
+
+        this.context = this.canvas.getContext('2d');
+
         const imageData = this.context.createImageData(width, height);
 
         const noise = new (Noise as any).Noise(seed);
@@ -76,9 +77,6 @@ export class MapGenerator {
 
         this.context.putImageData(imageData, 0, 0);
 
-        const base64 = this.canvas.toDataURL();
-        this.context.clearRect(0, 0, width, height);
-
-        return base64;
+        this.base64 = this.canvas.toDataURL();
     }
 }

@@ -15,16 +15,20 @@ export const NumberControl = ({ title, defaultValue, onChange }: NumberControlPr
         setValue(event.currentTarget.value);
     };
 
+    const handleBlur = (event: React.SyntheticEvent<HTMLInputElement>) => {
+        setValue((parseFloat(event.currentTarget.value) || 0).toString());
+        onChange ? onChange(parseFloat(event.currentTarget.value) || 0) : null;
+    };
+
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.nativeEvent.keyCode === 13) {
-            setValue((parseFloat(event.currentTarget.value) || 0).toString());
-            onChange ? onChange(parseFloat(event.currentTarget.value) || 0) : null;
+            event.currentTarget.blur();
         }
     };
 
     return (
         <PropertyControl title={title}>
-            <input value={value.toString()} onKeyPress={handleKeyPress} onChange={handleChange} />
+            <input value={value.toString()} onBlur={handleBlur} onKeyPress={handleKeyPress} onChange={handleChange} />
         </PropertyControl>
     );
 };
