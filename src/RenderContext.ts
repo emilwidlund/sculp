@@ -1,4 +1,4 @@
-import * as OrbitControls from 'three-orbitcontrols';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { WebGLRendererParameters, PerspectiveCamera } from 'three';
 
 import { modulate } from './utils/helpers';
